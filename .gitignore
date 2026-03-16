@@ -11,3 +11,7 @@ wheels/
 
 settings.local.json
 .playwright-mcp
+.pytest_cache/
+.python-version
+.vscode/
+.claude/

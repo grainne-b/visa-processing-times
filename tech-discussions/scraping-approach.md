@@ -62,4 +62,4 @@ The government updates the page **monthly**, not daily. Most daily scrapes will 
 ## Next Steps
 1. ~~Implement scraper~~ (done)
 2. ~~Implement change detection + console + README output~~ (done)
-3. Add GitHub Actions workflow for daily scheduling
+3. ~~Add GitHub Actions workflow for daily scheduling~~ (done — `.github/workflows/scrape.yml`)
