@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<!--
+  Mock page that mirrors the structure of:
+  https://immi.homeaffairs.gov.au/citizenship/citizenship-processing-times/citizenship-processing-times
+
+  The real page is a SharePoint site rendered by JavaScript. This fixture
+  represents the DOM state *after* JS has run — i.e. what the scraper sees.
+
+  Key structural notes:
+  - Each section is an <h2> inside a <div>, followed by sibling content divs
+    containing a <p> description and a <table>
+  - The "Processing times" table uses rowspan="3" on the first cell of the
+    "by conferral" row so that the two sub-period rows (approval to ceremony,
+    application to ceremony) only have 5 cells instead of 6
+  - Footnote superscripts are embedded in cell text but are stripped by
+    BeautifulSoup's get_text() — we preserve them here so the fixture is
+    faithful to reality
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Citizenship processing times</title>
+</head>
+<body>
+
+  <!-- ============================================================
+       Navigation / header (present on real page, ignored by scraper)
+       ============================================================ -->
+  <header>
+    <nav>
+      <a href="/home">Home</a>
+      <a href="/citizenship">Australian citizenship</a>
+    </nav>
+  </header>
+
+  <!-- ============================================================
+       Main content area
+       ============================================================ -->
+  <main>
+    <h1>Citizenship processing times</h1>
+
+    <!-- In-page navigation links (ignored by scraper) -->
+    <nav>
+      <a href="#content-index-0">Processing times</a>
+      <a href="#content-index-3">Number of applications we have</a>
+      <a href="#content-index-4">Number of applications received</a>
+    </nav>
+
+    <!-- --------------------------------------------------------
+         Section 1: Processing times
+         -------------------------------------------------------- -->
+    <div id="content-index-0">
+      <div>
+        <h2>Processing times</h2>
+      </div>
+      <div>
+        <p>If you have applied for Australian citizenship by conferral:</p>
+        <ul>
+          <li>90% of applications are processed within 10 months</li>
+        </ul>
+        <p>This table shows how long it is currently taking to process citizenship applications.</p>
+
+        <!--
+          Processing times table.
+
+          The "by conferral" application type spans 3 rows via rowspan="3".
+          Rows 2 and 3 for "by conferral" therefore only have 5 cells (no first cell).
+          The scraper handles this by tracking last_app_type across rows.
+        -->
+        <table>
+          <thead>
+            <tr>
+              <th>Application type</th>
+              <th>Period counted</th>
+              <th>25% of applications are processed in:</th>
+              <th>50% of applications are processed in:</th>
+              <th>75% of applications are processed in:</th>
+              <th>90% of applications are processed in:</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Row 1: by conferral — 6 cells, rowspan=3 on first cell -->
+            <tr>
+              <td rowspan="3">
+                Australian citizenship by conferral (general eligibility and other situations)<sup>1</sup>
+              </td>
+              <td>From date of application to decision<sup>2</sup></td>
+              <td>5 months</td>
+              <td>6 months</td>
+              <td>8 months</td>
+              <td>10 months</td>
+            </tr>
+            <!-- Row 2: by conferral sub-row — 5 cells (first cell merged above) -->
+            <tr>
+              <td>From date of approval to ceremony</td>
+              <td>4 months</td>
+              <td>5 months</td>
+              <td>5 months</td>
+              <td>6 months</td>
+            </tr>
+            <!-- Row 3: by conferral sub-row — 5 cells (first cell merged above) -->
+            <tr>
+              <td>From date of application to ceremony</td>
+              <td>10 months</td>
+              <td>11 months</td>
+              <td>13 months</td>
+              <td>15 months</td>
+            </tr>
+            <!-- Row 4: by descent — 6 cells -->
+            <tr>
+              <td>Australian citizenship by descent</td>
+              <td>From date of application to decision<sup>2</sup></td>
+              <td>4 months</td>
+              <td>4 months</td>
+              <td>5 months</td>
+              <td>7 months</td>
+            </tr>
+            <!-- Row 5: evidence — 6 cells -->
+            <tr>
+              <td>Evidence of Australian citizenship</td>
+              <td>From date of application to decision<sup>2</sup></td>
+              <td>2 days</td>
+              <td>4 days</td>
+              <td>8 days</td>
+              <td>15 days</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>1. Includes general eligibility and other situations.</p>
+        <p>2. A 'decision' includes applications that have been approved, refused, or withdrawn.</p>
+      </div>
+    </div>
+
+    <!-- --------------------------------------------------------
+         Section 2: Circumstances that affect processing times
+         (present on real page, ignored by scraper)
+         -------------------------------------------------------- -->
+    <div id="content-index-1">
+      <div>
+        <h2>Circumstances that affect processing times</h2>
+      </div>
+      <div>
+        <p>Factors that can affect the processing time of your application include:</p>
+        <ul>
+          <li>whether you have given us a complete application</li>
+          <li>how promptly you respond when we ask for more information</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- --------------------------------------------------------
+         Section 3: Postage times
+         (present on real page, ignored by scraper)
+         -------------------------------------------------------- -->
+    <div id="content-index-2">
+      <div>
+        <h2>Postage times</h2>
+      </div>
+      <div>
+        <p>We will print and post your Australian citizenship certificate after your application is approved.</p>
+      </div>
+    </div>
+
+    <!-- --------------------------------------------------------
+         Section 4: Number of applications we have
+         -------------------------------------------------------- -->
+    <div id="content-index-3">
+      <div>
+        <h2>Number of applications we have</h2>
+      </div>
+      <div>
+        <div>
+          <!--
+            The date "31 January 2026" is parsed from this paragraph using the
+            regex: r"on\s+(\d{1,2}\s+\w+\s+\d{4})"
+          -->
+          <p>This table shows how many applications we had on hand on 31 January 2026.</p>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Application type</th>
+                <th>Number of applications<sup>3</sup></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  Australian citizenship by conferral (general eligibility and other situations)<sup>4</sup>
+                </td>
+                <td>88,062</td>
+              </tr>
+              <tr>
+                <td>Australian citizenship by descent</td>
+                <td>6,220</td>
+              </tr>
+              <tr>
+                <td>Evidence of Australian citizenship</td>
+                <td>865</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p><sup>3</sup> The numbers are correct at time of publication.</p>
+          <p><sup>4</sup> Includes children aged 15 years or younger.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- --------------------------------------------------------
+         Section 5: Number of applications received
+         -------------------------------------------------------- -->
+    <div id="content-index-4">
+      <div>
+        <h2>Number of applications received</h2>
+      </div>
+      <div>
+        <!--
+          The period "1 January 2026" to "31 January 2026" is parsed from this
+          paragraph using the regex:
+          r"between\s+(\d{1,2}\s+\w+)\s+and\s+(\d{1,2}\s+\w+\s+\d{4})"
+        -->
+        <p>This table shows the number of citizenship applications we received between 1 January and 31 January 2026.</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Application type</th>
+              <th>Number of applications<sup>5</sup></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                Australian citizenship by conferral (general eligibility and other situations)<sup>6</sup>
+              </td>
+              <td>17,562</td>
+            </tr>
+            <tr>
+              <td>Australian citizenship by descent</td>
+              <td>1,882</td>
+            </tr>
+            <tr>
+              <td>Evidence of Australian citizenship</td>
+              <td>3,706</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p><sup>5</sup> The numbers are correct at time of publication.</p>
+        <p><sup>6</sup> Includes children aged 15 years or younger.</p>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ============================================================
+       Footer (present on real page, ignored by scraper)
+       ============================================================ -->
+  <footer>
+    <p>Last updated: 24 February 2026</p>
+    <p>Department of Home Affairs</p>
+  </footer>
+
+</body>
+</html>
