@@ -29,3 +29,8 @@ scrape_timestamp,application_type,period_counted,p25,p50,p75,p90
 2026-03-17T05:21:50Z,Australian citizenship by conferral (general eligibility and other situations) 1,From date of application to ceremony,10 months,11 months,13 months,15 months
 2026-03-17T05:21:50Z,Australian citizenship by descent,From date of application to decision 2,4 months,4 months,5 months,7 months
 2026-03-17T05:21:50Z,Evidence of Australian citizenship,From date of application to decision 2,2 days,4 days,8 days,15 days
+2026-03-18T05:26:33Z,Australian citizenship by conferral (general eligibility and other situations) 1,From date of application to decision 2,5 months,6 months,8 months,10 months
+2026-03-18T05:26:33Z,Australian citizenship by conferral (general eligibility and other situations) 1,From date of approval to ceremony,4 months,5 months,5 months,6 months
+2026-03-18T05:26:33Z,Australian citizenship by conferral (general eligibility and other situations) 1,From date of application to ceremony,10 months,11 months,13 months,15 months
+2026-03-18T05:26:33Z,Australian citizenship by descent,From date of application to decision 2,4 months,4 months,5 months,7 months
+2026-03-18T05:26:33Z,Evidence of Australian citizenship,From date of application to decision 2,2 days,4 days,8 days,15 days
