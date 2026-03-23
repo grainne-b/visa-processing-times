@@ -18,6 +18,7 @@ from main import (
     duration_trend,
     extract_applications_on_hand,
     extract_applications_received,
+    extract_last_updated,
     extract_processing_times,
     find_section_table,
     load_snapshots_by_date,
@@ -406,3 +407,19 @@ class TestLoadSnapshotsAndTwoMostRecent:
         previous, current = two_most_recent({})
         assert previous is None
         assert current is None
+
+
+# ---------------------------------------------------------------------------
+# extract_last_updated
+# ---------------------------------------------------------------------------
+
+class TestExtractLastUpdated:
+    def test_found(self, soup):
+        assert extract_last_updated(soup) == "24 February 2026"
+
+    def test_not_found(self):
+        assert extract_last_updated(BeautifulSoup("<html></html>", "html.parser")) == ""
+
+    def test_case_insensitive(self):
+        html = "<html><body><p>LAST UPDATED: 1 March 2026</p></body></html>"
+        assert extract_last_updated(BeautifulSoup(html, "html.parser")) == "1 March 2026"

@@ -41,9 +41,11 @@ Three files in `data/`, each appended on every run:
 
 | File | Columns |
 |------|---------|
-| `processing_times.csv` | `scrape_timestamp, application_type, period_counted, p25, p50, p75, p90` |
-| `applications_on_hand.csv` | `scrape_timestamp, report_date, application_type, count` |
-| `applications_received.csv` | `scrape_timestamp, period_start, period_end, application_type, count` |
+| `processing_times.csv` | `scrape_timestamp, application_type, period_counted, p25, p50, p75, p90, page_last_updated` |
+| `applications_on_hand.csv` | `scrape_timestamp, report_date, application_type, count, page_last_updated` |
+| `applications_received.csv` | `scrape_timestamp, period_start, period_end, application_type, count, page_last_updated` |
+
+`page_last_updated` is extracted from the `<footer>` element (`Last updated: DD Month YYYY`) and records when the government last published the page, distinct from when it was scraped.
 
 ## Change Detection & Display
 
@@ -59,7 +61,22 @@ The government updates the page **monthly**, not daily. Most daily scrapes will 
 - Processing times: `↓ faster` / `↑ slower` / `→ unchanged` (duration compared via approximate days: 1 month = 30 days)
 - Counts: `↑ +N (+X%)` / `↓ -N (-X%)` / `→` with percentage change
 
+## Backfilling Historical Data
+
+Rather than waiting months for the daily scraper to accumulate data, `backfill.py` loads snapshots from the Wayback Machine going back to January 2025.
+
+**Approach:**
+- Query the CDX API (`web.archive.org/cdx/search/cdx`) with `collapse=timestamp:6` to get one snapshot per month
+- Skip months already present in `data/applications_on_hand.csv` (deduplication by `report_date`)
+- Reuse all existing `extract_*` functions from `main.py` — no parsing logic duplicated
+- Single Playwright stealth browser session for all snapshots (avoids repeated startup overhead)
+- `scrape_timestamp` is set to the time the backfill ran; `page_last_updated` captures the government's publish date from the archived page
+
+**Usage:** `uv run backfill.py`
+
 ## Next Steps
 1. ~~Implement scraper~~ (done)
 2. ~~Implement change detection + console + README output~~ (done)
 3. ~~Add GitHub Actions workflow for daily scheduling~~ (done — `.github/workflows/scrape.yml`)
+4. ~~Add `page_last_updated` column to all CSVs~~ (done)
+5. ~~Backfill historical data from Wayback Machine~~ (done — `backfill.py`)

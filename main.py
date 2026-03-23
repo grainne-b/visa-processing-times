@@ -133,6 +133,14 @@ def extract_applications_received(soup) -> tuple[str, str, list[dict]]:
     return period_start, period_end, records
 
 
+def extract_last_updated(soup) -> str:
+    node = soup.find(string=re.compile(r"Last updated:", re.IGNORECASE))
+    if not node:
+        return ""
+    m = re.search(r"Last updated:\s*(.+)", node, re.IGNORECASE)
+    return m.group(1).strip() if m else ""
+
+
 # ---------------------------------------------------------------------------
 # CSV helpers
 # ---------------------------------------------------------------------------
@@ -313,6 +321,7 @@ def write_latest_md(
     curr_date: str,
     prev_date: str,
     scrape_timestamp: str,
+    page_last_updated: str,
 ):
     prev_pt = {(r["application_type"], r["period_counted"]): r for r in (prev_processing or [])}
     prev_oh = {r["application_type"]: r for r in (prev_on_hand or [])}
@@ -325,7 +334,7 @@ def write_latest_md(
     prev_label = f"Previously: {prev_date}" if prev_date else "First snapshot"
 
     lines = [
-        f"> **Report date:** {curr_date} &nbsp;|&nbsp; {prev_label} &nbsp;|&nbsp; **Scraped:** {scrape_timestamp}",
+        f"> **Report date:** {curr_date} &nbsp;|&nbsp; {prev_label} &nbsp;|&nbsp; **Page last updated:** {page_last_updated} &nbsp;|&nbsp; **Scraped:** {scrape_timestamp}",
         "",
         f"Source: [Department of Home Affairs]({URL})",
         "",
@@ -435,6 +444,7 @@ def main():
     processing_rows = extract_processing_times(soup)
     report_date, on_hand_rows = extract_applications_on_hand(soup)
     _, _, received_rows = extract_applications_received(soup)
+    page_last_updated = extract_last_updated(soup)
 
     # Load previous snapshots before appending new data
     prev_pt, curr_pt_saved = two_most_recent(
@@ -454,18 +464,18 @@ def main():
     # Save to CSVs
     append_csv(
         DATA_DIR / "processing_times.csv",
-        ["scrape_timestamp", "application_type", "period_counted", "p25", "p50", "p75", "p90"],
-        [{"scrape_timestamp": scrape_timestamp, **r} for r in processing_rows],
+        ["scrape_timestamp", "application_type", "period_counted", "p25", "p50", "p75", "p90", "page_last_updated"],
+        [{"scrape_timestamp": scrape_timestamp, **r, "page_last_updated": page_last_updated} for r in processing_rows],
     )
     append_csv(
         DATA_DIR / "applications_on_hand.csv",
-        ["scrape_timestamp", "report_date", "application_type", "count"],
-        [{"scrape_timestamp": scrape_timestamp, **r} for r in on_hand_rows],
+        ["scrape_timestamp", "report_date", "application_type", "count", "page_last_updated"],
+        [{"scrape_timestamp": scrape_timestamp, **r, "page_last_updated": page_last_updated} for r in on_hand_rows],
     )
     append_csv(
         DATA_DIR / "applications_received.csv",
-        ["scrape_timestamp", "period_start", "period_end", "application_type", "count"],
-        [{"scrape_timestamp": scrape_timestamp, **r} for r in received_rows],
+        ["scrape_timestamp", "period_start", "period_end", "application_type", "count", "page_last_updated"],
+        [{"scrape_timestamp": scrape_timestamp, **r, "page_last_updated": page_last_updated} for r in received_rows],
     )
     print(f"  Saved: {len(processing_rows)} processing rows, {len(on_hand_rows)} on-hand rows, {len(received_rows)} received rows.")
 
@@ -473,7 +483,7 @@ def main():
         prev_date = list(on_hand_snapshots.keys())[-1] if on_hand_snapshots else ""
 
         print_change_summary(
-            prev_processing=list(prev_oh_snap) if prev_oh_snap else None,  # fallback; see note below
+            prev_processing=prev_pt,
             curr_processing=processing_rows,
             prev_on_hand=prev_oh_snap,
             curr_on_hand=on_hand_rows,
@@ -493,6 +503,7 @@ def main():
             curr_date=report_date,
             prev_date=prev_date,
             scrape_timestamp=scrape_timestamp,
+            page_last_updated=page_last_updated,
         )
     else:
         print(f"  No new data (report date unchanged: {report_date}). Skipping summary.")
