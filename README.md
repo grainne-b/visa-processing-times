@@ -16,26 +16,37 @@ uv run pytest tests/ -v
 
 ---
 
-## Latest Data
+## Latest Data — 28 February 2026
 
-> **Report date:** 31 January 2026 &nbsp;|&nbsp; Previously: 31 December 2025 &nbsp;|&nbsp; **Scraped:** 2026-03-16T04:15:00Z
+> **Site last updated:** 10 March 2026 &nbsp;|&nbsp; **Scraped:** 2026-03-23T05:39:55Z
 
 Source: [Department of Home Affairs](https://immi.homeaffairs.gov.au/citizenship/citizenship-processing-times/citizenship-processing-times)
 
 ---
 
-## Processing Times
+### At a Glance
 
-Time taken to process 90% of applications (lower is better).
-
-| Application type | Period | p25 | p50 | p75 | p90 | Change (p90) |
-|---|---|---|---|---|---|---|
-| By conferral | From date of application to decision 2 | 5 months | 6 months | 8 months | 10 months | 11 months → 10 months  ↓ faster |
-| By conferral | From date of approval to ceremony | 4 months | 5 months | 5 months | 6 months | 6 months → 6 months  → unchanged |
+| Metric | Current | Change vs previous month |
+|---|---|---|
+| Processing time — Application → Decision | 10 months | ↓ faster (was 11 months) |
+| Processing time — Approval → Ceremony | 6 months | → unchanged |
+| Applications on hand (By conferral) | 88,062 | ↓ -3,142 (-3.4%) |
+| Applications received (1 February 2026 – 28 February 2026, By conferral) | 17,562 | ↑ +672 (+4.0%) |
 
 ---
 
-## Applications on Hand (as of 31 January 2026)
+## Processing Times
+
+_Time by which 90% of applications are decided — lower is better._
+
+| Application type | Period | p90 | Change |
+|---|---|---|---|
+| By conferral | Application → Decision | 10 months | 11 months → 10 months  ↓ faster |
+| By conferral | Approval → Ceremony | 6 months | 6 months → 6 months  → unchanged |
+
+---
+
+## Applications on Hand (as of 28 February 2026)
 
 | Application type | Count | Change |
 |---|---|---|
@@ -43,7 +54,7 @@ Time taken to process 90% of applications (lower is better).
 
 ---
 
-## Applications Received (1 January 2026 – 31 January 2026)
+## Applications Received (1 February 2026 – 28 February 2026)
 
 | Application type | Count | Change vs previous month |
 |---|---|---|

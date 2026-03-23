@@ -242,6 +242,16 @@ def _short_app_type(app_type: str) -> str:
     return app_type
 
 
+def _short_period(period: str) -> str:
+    """Shorten verbose period labels for display."""
+    p = period.lower()
+    if "application" in p and "decision" in p:
+        return "Application → Decision"
+    if "approval" in p and "ceremony" in p:
+        return "Approval → Ceremony"
+    return period
+
+
 # ---------------------------------------------------------------------------
 # Console summary (Option A)
 # ---------------------------------------------------------------------------
@@ -331,35 +341,89 @@ def write_latest_md(
         f"{curr_received[0]['period_start']} – {curr_received[0]['period_end']}"
         if curr_received else "—"
     )
-    prev_label = f"Previously: {prev_date}" if prev_date else "First snapshot"
+
+    # --- At a Glance rows ---
+    glance_rows = []
+    for r in curr_processing:
+        key = (r["application_type"], r["period_counted"])
+        label = f"Processing time — {_short_period(r['period_counted'])}"
+        change_cell = "—"
+        if prev_pt and key in prev_pt:
+            old_p90 = prev_pt[key]["p90"]
+            trend = duration_trend(old_p90, r["p90"])
+            change_cell = "→ unchanged" if old_p90 == r["p90"] else f"{trend} (was {old_p90})"
+        glance_rows.append(f"| {label} | {r['p90']} | {change_cell} |")
+    for r in curr_on_hand:
+        label = f"Applications on hand ({_short_app_type(r['application_type'])})"
+        count_fmt = f"{int(r['count']):,}"
+        change_cell = "—"
+        if prev_oh and r["application_type"] in prev_oh:
+            change_cell = count_change(prev_oh[r["application_type"]]["count"], r["count"])
+        glance_rows.append(f"| {label} | {count_fmt} | {change_cell} |")
+    for r in curr_received:
+        label = f"Applications received ({period}, {_short_app_type(r['application_type'])})"
+        count_fmt = f"{int(r['count']):,}"
+        change_cell = "—"
+        if prev_rec and r["application_type"] in prev_rec:
+            change_cell = count_change(prev_rec[r["application_type"]]["count"], r["count"])
+        glance_rows.append(f"| {label} | {count_fmt} | {change_cell} |")
+
+    # --- Processing times detail rows ---
+    pt_rows = []
+    for r in curr_processing:
+        key = (r["application_type"], r["period_counted"])
+        app = _short_app_type(r["application_type"])
+        period_short = _short_period(r["period_counted"])
+        change_cell = "—"
+        if prev_pt and key in prev_pt:
+            old_p90 = prev_pt[key]["p90"]
+            change_cell = f"{old_p90} → {r['p90']}  {duration_trend(old_p90, r['p90'])}"
+        pt_rows.append(f"| {app} | {period_short} | {r['p90']} | {change_cell} |")
+
+    # --- On hand detail rows ---
+    oh_rows = []
+    for r in curr_on_hand:
+        app = _short_app_type(r["application_type"])
+        count_fmt = f"{int(r['count']):,}"
+        change_cell = "—"
+        if prev_oh and r["application_type"] in prev_oh:
+            change_cell = count_change(prev_oh[r["application_type"]]["count"], r["count"])
+        oh_rows.append(f"| {app} | {count_fmt} | {change_cell} |")
+
+    # --- Received detail rows ---
+    rec_rows = []
+    for r in curr_received:
+        app = _short_app_type(r["application_type"])
+        count_fmt = f"{int(r['count']):,}"
+        change_cell = "—"
+        if prev_rec and r["application_type"] in prev_rec:
+            change_cell = count_change(prev_rec[r["application_type"]]["count"], r["count"])
+        rec_rows.append(f"| {app} | {count_fmt} | {change_cell} |")
 
     lines = [
-        f"> **Report date:** {curr_date} &nbsp;|&nbsp; {prev_label} &nbsp;|&nbsp; **Page last updated:** {page_last_updated} &nbsp;|&nbsp; **Scraped:** {scrape_timestamp}",
+        f"## Latest Data — {curr_date}",
+        "",
+        f"> **Site last updated:** {page_last_updated} &nbsp;|&nbsp; **Scraped:** {scrape_timestamp}",
         "",
         f"Source: [Department of Home Affairs]({URL})",
         "",
         "---",
         "",
+        "### At a Glance",
+        "",
+        "| Metric | Current | Change vs previous month |",
+        "|---|---|---|",
+        *glance_rows,
+        "",
+        "---",
+        "",
         "## Processing Times",
         "",
-        "Time taken to process 90% of applications (lower is better).",
+        "_Time by which 90% of applications are decided — lower is better._",
         "",
-        "| Application type | Period | p25 | p50 | p75 | p90 | Change (p90) |",
-        "|---|---|---|---|---|---|---|",
-    ]
-
-    for r in curr_processing:
-        key = (r["application_type"], r["period_counted"])
-        app = _short_app_type(r["application_type"])
-        change_cell = "—"
-        if prev_pt and key in prev_pt:
-            old_p90 = prev_pt[key]["p90"]
-            change_cell = f"{old_p90} → {r['p90']}  {duration_trend(old_p90, r['p90'])}"
-        lines.append(
-            f"| {app} | {r['period_counted']} | {r['p25']} | {r['p50']} | {r['p75']} | {r['p90']} | {change_cell} |"
-        )
-
-    lines += [
+        "| Application type | Period | p90 | Change |",
+        "|---|---|---|---|",
+        *pt_rows,
         "",
         "---",
         "",
@@ -367,17 +431,7 @@ def write_latest_md(
         "",
         "| Application type | Count | Change |",
         "|---|---|---|",
-    ]
-
-    for r in curr_on_hand:
-        app = _short_app_type(r["application_type"])
-        count_fmt = f"{int(r['count']):,}"
-        change_cell = "—"
-        if prev_oh and r["application_type"] in prev_oh:
-            change_cell = count_change(prev_oh[r["application_type"]]["count"], r["count"])
-        lines.append(f"| {app} | {count_fmt} | {change_cell} |")
-
-    lines += [
+        *oh_rows,
         "",
         "---",
         "",
@@ -385,17 +439,7 @@ def write_latest_md(
         "",
         "| Application type | Count | Change vs previous month |",
         "|---|---|---|",
-    ]
-
-    for r in curr_received:
-        app = _short_app_type(r["application_type"])
-        count_fmt = f"{int(r['count']):,}"
-        change_cell = "—"
-        if prev_rec and r["application_type"] in prev_rec:
-            change_cell = count_change(prev_rec[r["application_type"]]["count"], r["count"])
-        lines.append(f"| {app} | {count_fmt} | {change_cell} |")
-
-    lines += [
+        *rec_rows,
         "",
         "---",
         "",
@@ -420,8 +464,6 @@ def write_latest_md(
         "```",
         "",
         "---",
-        "",
-        "## Latest Data",
         "",
     ]
 
