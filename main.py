@@ -252,6 +252,96 @@ def _short_period(period: str) -> str:
     return period
 
 
+def _build_history_rows() -> list[str]:
+    """
+    Return markdown table rows for historical data (newest first).
+
+    Columns: Report date | p90 App→Decision | p90 Approval→Ceremony |
+             On hand | Received | Est. processed
+
+    Est. processed = prev_on_hand + received - curr_on_hand
+    """
+    oh_path = DATA_DIR / "applications_on_hand.csv"
+    if not oh_path.exists():
+        return []
+
+    def _parse_date(s: str) -> datetime:
+        for fmt in ("%d %B %Y", "%d %b %Y"):
+            try:
+                return datetime.strptime(s, fmt)
+            except ValueError:
+                continue
+        return datetime.min
+
+    # Latest scrape_timestamp per report_date
+    date_to_ts: dict[str, str] = {}
+    with open(oh_path, newline="", encoding="utf-8") as f:
+        for row in csv.DictReader(f):
+            d, ts = row["report_date"], row["scrape_timestamp"]
+            if d not in date_to_ts or ts > date_to_ts[d]:
+                date_to_ts[d] = ts
+
+    pt_by_ts = load_snapshots_by_date(DATA_DIR / "processing_times.csv", "scrape_timestamp")
+    oh_by_date = load_snapshots_by_date(oh_path, "report_date")
+    rec_by_date = load_snapshots_by_date(DATA_DIR / "applications_received.csv", "period_end")
+
+    sorted_dates = sorted(date_to_ts.keys(), key=_parse_date, reverse=True)
+
+    def _get_pt(pt_rows: list[dict], period_kw1: str, period_kw2: str) -> str:
+        for r in pt_rows:
+            if "conferral" in r["application_type"].lower():
+                p = r["period_counted"].lower()
+                if period_kw1 in p and period_kw2 in p:
+                    return r["p90"]
+        return "—"
+
+    def _get_oh(oh_rows: list[dict]) -> int | None:
+        for r in oh_rows:
+            if "conferral" in r["application_type"].lower():
+                try:
+                    return int(r["count"])
+                except ValueError:
+                    pass
+        return None
+
+    def _get_rec(rec_rows: list[dict]) -> int | None:
+        for r in rec_rows:
+            if "conferral" in r["application_type"].lower():
+                try:
+                    return int(r["count"])
+                except ValueError:
+                    pass
+        return None
+
+    rows = []
+    for i, date in enumerate(sorted_dates):
+        ts = date_to_ts[date]
+        pt_rows = pt_by_ts.get(ts, [])
+        oh_rows = oh_by_date.get(date, [])
+        rec_rows = rec_by_date.get(date, [])
+
+        app_decision = _get_pt(pt_rows, "application", "decision")
+        app_ceremony = _get_pt(pt_rows, "approval", "ceremony")
+        curr_oh = _get_oh(oh_rows)
+        received = _get_rec(rec_rows)
+
+        oh_fmt = f"{curr_oh:,}" if curr_oh is not None else "—"
+        rec_fmt = f"{received:,}" if received is not None else "—"
+
+        # Est. processed: need previous month's on_hand
+        est_processed = "—"
+        if i + 1 < len(sorted_dates):
+            prev_date = sorted_dates[i + 1]
+            prev_oh = _get_oh(oh_by_date.get(prev_date, []))
+            if prev_oh is not None and curr_oh is not None and received is not None:
+                processed = prev_oh + received - curr_oh
+                est_processed = f"{processed:,}"
+
+        rows.append(f"| {date} | {app_decision} | {app_ceremony} | {oh_fmt} | {rec_fmt} | {est_processed} |")
+
+    return rows
+
+
 # ---------------------------------------------------------------------------
 # Console summary (Option A)
 # ---------------------------------------------------------------------------
@@ -440,6 +530,16 @@ def write_latest_md(
         "| Application type | Count | Change vs previous month |",
         "|---|---|---|",
         *rec_rows,
+        "",
+        "---",
+        "",
+        "## Historical Data (By conferral)",
+        "",
+        "_Est. processed = previous month on hand + received − current month on hand._",
+        "",
+        "| Report date | App → Decision (p90) | Approval → Ceremony (p90) | On hand | Received | Est. processed |",
+        "|---|---|---|---|---|---|",
+        *_build_history_rows(),
         "",
         "---",
         "",
