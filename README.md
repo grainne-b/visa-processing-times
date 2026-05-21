@@ -16,9 +16,9 @@ uv run pytest tests/ -v
 
 ---
 
-## Latest Data — 31 March 2026
+## Latest Data — 30 April 2026
 
-> **Site last updated:**  &nbsp;|&nbsp; **Scraped:** 2026-04-20T06:14:57Z
+> **Site last updated:**  &nbsp;|&nbsp; **Scraped:** 2026-05-21T07:53:07Z
 
 Source: [Department of Home Affairs](https://immi.homeaffairs.gov.au/citizenship/citizenship-processing-times/citizenship-processing-times)
 
@@ -28,17 +28,17 @@ Source: [Department of Home Affairs](https://immi.homeaffairs.gov.au/citizenship
 
 | Metric | Current | Change vs previous month |
 |---|---|---|
-| Processing time — Application → Decision | 8 months | ↓ faster (was 9 months) |
+| Processing time — Application → Decision | 8 months | → unchanged |
 | Processing time — Approval → Ceremony | 6 months | → unchanged |
 | Processing time — From date of application to ceremony | 14 months | → unchanged |
-| Processing time — Application → Decision | 6 months | ↓ faster (was 7 months) |
-| Processing time — Application → Decision | 12 days | ↓ faster (was 16 days) |
-| Applications on hand (By conferral) | 74,292 | ↓ -13,770 (-15.6%) |
-| Applications on hand (By descent) | 5,827 | ↓ -393 (-6.3%) |
-| Applications on hand (Evidence) | 541 | ↓ -324 (-37.5%) |
-| Applications received (1 March 2026 – 31 March 2026, By conferral) | 17,898 | ↑ +336 (+1.9%) |
-| Applications received (1 March 2026 – 31 March 2026, By descent) | 2,026 | ↑ +144 (+7.7%) |
-| Applications received (1 March 2026 – 31 March 2026, Evidence) | 3,577 | ↓ -129 (-3.5%) |
+| Processing time — Application → Decision | 6 months | → unchanged |
+| Processing time — Application → Decision | 11 days | ↓ faster (was 12 days) |
+| Applications on hand (By conferral) | 70,151 | ↓ -9,619 (-12.1%) |
+| Applications on hand (By descent) | 5,492 | ↓ -505 (-8.4%) |
+| Applications on hand (Evidence) | 756 | ↑ +45 (+6.3%) |
+| Applications received (1 April 2026 – 30 April 2026, By conferral) | 17,175 | ↑ +692 (+4.2%) |
+| Applications received (1 April 2026 – 30 April 2026, By descent) | 1,767 | ↓ -101 (-5.4%) |
+| Applications received (1 April 2026 – 30 April 2026, Evidence) | 3,290 | ↓ -310 (-8.6%) |
 
 ---
 
@@ -48,31 +48,31 @@ _Time by which 90% of applications are decided — lower is better._
 
 | Application type | Period | p90 | Change |
 |---|---|---|---|
-| By conferral | Application → Decision | 8 months | 9 months → 8 months  ↓ faster |
+| By conferral | Application → Decision | 8 months | 8 months → 8 months  → unchanged |
 | By conferral | Approval → Ceremony | 6 months | 6 months → 6 months  → unchanged |
 | By conferral | From date of application to ceremony | 14 months | 14 months → 14 months  → unchanged |
-| By descent | Application → Decision | 6 months | 7 months → 6 months  ↓ faster |
-| Evidence | Application → Decision | 12 days | 16 days → 12 days  ↓ faster |
+| By descent | Application → Decision | 6 months | 6 months → 6 months  → unchanged |
+| Evidence | Application → Decision | 11 days | 12 days → 11 days  ↓ faster |
 
 ---
 
-## Applications on Hand (as of 31 March 2026)
+## Applications on Hand (as of 30 April 2026)
 
 | Application type | Count | Change |
 |---|---|---|
-| By conferral | 74,292 | ↓ -13,770 (-15.6%) |
-| By descent | 5,827 | ↓ -393 (-6.3%) |
-| Evidence | 541 | ↓ -324 (-37.5%) |
+| By conferral | 70,151 | ↓ -9,619 (-12.1%) |
+| By descent | 5,492 | ↓ -505 (-8.4%) |
+| Evidence | 756 | ↑ +45 (+6.3%) |
 
 ---
 
-## Applications Received (1 March 2026 – 31 March 2026)
+## Applications Received (1 April 2026 – 30 April 2026)
 
 | Application type | Count | Change vs previous month |
 |---|---|---|
-| By conferral | 17,898 | ↑ +336 (+1.9%) |
-| By descent | 2,026 | ↑ +144 (+7.7%) |
-| Evidence | 3,577 | ↓ -129 (-3.5%) |
+| By conferral | 17,175 | ↑ +692 (+4.2%) |
+| By descent | 1,767 | ↓ -101 (-5.4%) |
+| Evidence | 3,290 | ↓ -310 (-8.6%) |
 
 ---
 
@@ -82,6 +82,7 @@ _Est. processed = previous month on hand + received − current month on hand._
 
 | Report date | App → Decision (p90) | Approval → Ceremony (p90) | On hand | Received | Est. processed |
 |---|---|---|---|---|---|
+| 30 April 2026 | 8 months | 6 months | 70,151 | 17,175 | 21,316 |
 | 31 March 2026 | 8 months | 6 months | 74,292 | 17,898 | 23,376 |
 | 28 February 2026 | 9 months | 6 months | 79,770 | 16,483 | 24,775 |
 | 31 January 2026 | 10 months | 6 months | 88,062 | — | — |
