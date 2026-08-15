@@ -16,9 +16,9 @@ uv run pytest tests/ -v
 
 ---
 
-## Latest Data — 30 June 2026
+## Latest Data — 31 July 2026
 
-> **Site last updated:**  &nbsp;|&nbsp; **Scraped:** 2026-07-24T06:25:47Z
+> **Site last updated:**  &nbsp;|&nbsp; **Scraped:** 2026-08-15T04:29:55Z
 
 Source: [Department of Home Affairs](https://immi.homeaffairs.gov.au/citizenship/citizenship-processing-times/citizenship-processing-times)
 
@@ -28,17 +28,17 @@ Source: [Department of Home Affairs](https://immi.homeaffairs.gov.au/citizenship
 
 | Metric | Current | Change vs previous month |
 |---|---|---|
-| Processing time — Application → Decision | 6 months | ↓ faster (was 7 months) |
-| Processing time — Approval → Ceremony | 7 months | ↑ slower (was 6 months) |
-| Processing time — From date of application to ceremony | 14 months | → unchanged |
+| Processing time — Application → Decision | 6 months | → unchanged |
+| Processing time — Approval → Ceremony | 6 months | ↓ faster (was 7 months) |
+| Processing time — From date of application to ceremony | 13 months | ↓ faster (was 14 months) |
 | Processing time — Application → Decision | 5 months | → unchanged |
-| Processing time — Application → Decision | 16 days | ↑ slower (was 15 days) |
-| Applications on hand (By conferral) | 62,683 | ↓ -7,468 (-10.6%) |
-| Applications on hand (By descent) | 3,898 | ↓ -1,594 (-29.0%) |
-| Applications on hand (Evidence) | 622 | ↓ -134 (-17.7%) |
-| Applications received (1 June 2026 – 30 June 2026, By conferral) | 21,066 | ↑ +3,891 (+22.7%) |
-| Applications received (1 June 2026 – 30 June 2026, By descent) | 1,682 | ↓ -85 (-4.8%) |
-| Applications received (1 June 2026 – 30 June 2026, Evidence) | 3,566 | ↑ +276 (+8.4%) |
+| Processing time — Application → Decision | 12 days | ↓ faster (was 16 days) |
+| Applications on hand (By conferral) | 56,284 | ↓ -5,800 (-9.3%) |
+| Applications on hand (By descent) | 3,433 | ↓ -997 (-22.5%) |
+| Applications on hand (Evidence) | 899 | ↑ +78 (+9.5%) |
+| Applications received (1 July 2026 – 31 July 2026, By conferral) | 24,090 | ↑ +4,742 (+24.5%) |
+| Applications received (1 July 2026 – 31 July 2026, By descent) | 1,581 | ↓ -24 (-1.5%) |
+| Applications received (1 July 2026 – 31 July 2026, Evidence) | 4,135 | ↑ +522 (+14.4%) |
 
 ---
 
@@ -48,31 +48,31 @@ _Time by which 90% of applications are decided — lower is better._
 
 | Application type | Period | p90 | Change |
 |---|---|---|---|
-| By conferral | Application → Decision | 6 months | 7 months → 6 months  ↓ faster |
-| By conferral | Approval → Ceremony | 7 months | 6 months → 7 months  ↑ slower |
-| By conferral | From date of application to ceremony | 14 months | 14 months → 14 months  → unchanged |
+| By conferral | Application → Decision | 6 months | 6 months → 6 months  → unchanged |
+| By conferral | Approval → Ceremony | 6 months | 7 months → 6 months  ↓ faster |
+| By conferral | From date of application to ceremony | 13 months | 14 months → 13 months  ↓ faster |
 | By descent | Application → Decision | 5 months | 5 months → 5 months  → unchanged |
-| Evidence | Application → Decision | 16 days | 15 days → 16 days  ↑ slower |
+| Evidence | Application → Decision | 12 days | 16 days → 12 days  ↓ faster |
 
 ---
 
-## Applications on Hand (as of 30 June 2026)
+## Applications on Hand (as of 31 July 2026)
 
 | Application type | Count | Change |
 |---|---|---|
-| By conferral | 62,683 | ↓ -7,468 (-10.6%) |
-| By descent | 3,898 | ↓ -1,594 (-29.0%) |
-| Evidence | 622 | ↓ -134 (-17.7%) |
+| By conferral | 56,284 | ↓ -5,800 (-9.3%) |
+| By descent | 3,433 | ↓ -997 (-22.5%) |
+| Evidence | 899 | ↑ +78 (+9.5%) |
 
 ---
 
-## Applications Received (1 June 2026 – 30 June 2026)
+## Applications Received (1 July 2026 – 31 July 2026)
 
 | Application type | Count | Change vs previous month |
 |---|---|---|
-| By conferral | 21,066 | ↑ +3,891 (+22.7%) |
-| By descent | 1,682 | ↓ -85 (-4.8%) |
-| Evidence | 3,566 | ↑ +276 (+8.4%) |
+| By conferral | 24,090 | ↑ +4,742 (+24.5%) |
+| By descent | 1,581 | ↓ -24 (-1.5%) |
+| Evidence | 4,135 | ↑ +522 (+14.4%) |
 
 ---
 
@@ -82,6 +82,7 @@ _Est. processed = previous month on hand + received − current month on hand._
 
 | Report date | App → Decision (p90) | Approval → Ceremony (p90) | On hand | Received | Est. processed |
 |---|---|---|---|---|---|
+| 31 July 2026 | 6 months | 6 months | 56,284 | 24,090 | 30,489 |
 | 30 June 2026 | 6 months | 7 months | 62,683 | — | — |
 | 31 May 2026 | 7 months | 6 months | 62,084 | — | — |
 | 30 April 2026 | 8 months | 6 months | 70,151 | 17,175 | 21,316 |
