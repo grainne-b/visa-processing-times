@@ -16,9 +16,9 @@ uv run pytest tests/ -v
 
 ---
 
-## Latest Data — 30 September 2026
+## Latest Data — 31 October 2026
 
-> **Site last updated:**  &nbsp;|&nbsp; **Scraped:** 2026-10-16T08:46:22Z
+> **Site last updated:**  &nbsp;|&nbsp; **Scraped:** 2026-11-13T11:53:00Z
 
 Source: [Department of Home Affairs](https://immi.homeaffairs.gov.au/citizenship/citizenship-processing-times/citizenship-processing-times)
 
@@ -30,15 +30,15 @@ Source: [Department of Home Affairs](https://immi.homeaffairs.gov.au/citizenship
 |---|---|---|
 | Processing time — Application → Decision | 5 months | → unchanged |
 | Processing time — Approval → Ceremony | 6 months | → unchanged |
-| Processing time — From date of application to ceremony | 11 months | ↓ faster (was 12 months) |
+| Processing time — From date of application to ceremony | 10 months | ↓ faster (was 11 months) |
 | Processing time — Application → Decision | 4 months | → unchanged |
-| Processing time — Application → Decision | 15 days | ↓ faster (was 16 days) |
-| Applications on hand (By conferral) | 53,298 | ↓ -2,986 (-5.3%) |
-| Applications on hand (By descent) | 2,988 | ↓ -445 (-13.0%) |
-| Applications on hand (Evidence) | 940 | ↑ +41 (+4.6%) |
-| Applications received (1 September 2026 – 30 September 2026, By conferral) | 23,581 | ↓ -509 (-2.1%) |
-| Applications received (1 September 2026 – 30 September 2026, By descent) | 1,664 | ↑ +83 (+5.2%) |
-| Applications received (1 September 2026 – 30 September 2026, Evidence) | 3,647 | ↓ -488 (-11.8%) |
+| Processing time — Application → Decision | 15 days | → unchanged |
+| Applications on hand (By conferral) | 47,970 | ↓ -7,245 (-13.1%) |
+| Applications on hand (By descent) | 2,461 | ↓ -897 (-26.7%) |
+| Applications on hand (Evidence) | 673 | ↓ -182 (-21.3%) |
+| Applications received (1 October 2026 – 31 October 2026, By conferral) | 22,723 | ↓ -1,699 (-7.0%) |
+| Applications received (1 October 2026 – 31 October 2026, By descent) | 1,685 | ↓ -18 (-1.1%) |
+| Applications received (1 October 2026 – 31 October 2026, Evidence) | 3,837 | ↓ -137 (-3.4%) |
 
 ---
 
@@ -50,29 +50,29 @@ _Time by which 90% of applications are decided — lower is better._
 |---|---|---|---|
 | By conferral | Application → Decision | 5 months | 5 months → 5 months  → unchanged |
 | By conferral | Approval → Ceremony | 6 months | 6 months → 6 months  → unchanged |
-| By conferral | From date of application to ceremony | 11 months | 12 months → 11 months  ↓ faster |
+| By conferral | From date of application to ceremony | 10 months | 11 months → 10 months  ↓ faster |
 | By descent | Application → Decision | 4 months | 4 months → 4 months  → unchanged |
-| Evidence | Application → Decision | 15 days | 16 days → 15 days  ↓ faster |
+| Evidence | Application → Decision | 15 days | 15 days → 15 days  → unchanged |
 
 ---
 
-## Applications on Hand (as of 30 September 2026)
+## Applications on Hand (as of 31 October 2026)
 
 | Application type | Count | Change |
 |---|---|---|
-| By conferral | 53,298 | ↓ -2,986 (-5.3%) |
-| By descent | 2,988 | ↓ -445 (-13.0%) |
-| Evidence | 940 | ↑ +41 (+4.6%) |
+| By conferral | 47,970 | ↓ -7,245 (-13.1%) |
+| By descent | 2,461 | ↓ -897 (-26.7%) |
+| Evidence | 673 | ↓ -182 (-21.3%) |
 
 ---
 
-## Applications Received (1 September 2026 – 30 September 2026)
+## Applications Received (1 October 2026 – 31 October 2026)
 
 | Application type | Count | Change vs previous month |
 |---|---|---|
-| By conferral | 23,581 | ↓ -509 (-2.1%) |
-| By descent | 1,664 | ↑ +83 (+5.2%) |
-| Evidence | 3,647 | ↓ -488 (-11.8%) |
+| By conferral | 22,723 | ↓ -1,699 (-7.0%) |
+| By descent | 1,685 | ↓ -18 (-1.1%) |
+| Evidence | 3,837 | ↓ -137 (-3.4%) |
 
 ---
 
@@ -82,6 +82,7 @@ _Est. processed = previous month on hand + received − current month on hand._
 
 | Report date | App → Decision (p90) | Approval → Ceremony (p90) | On hand | Received | Est. processed |
 |---|---|---|---|---|---|
+| 31 October 2026 | 5 months | 6 months | 47,970 | 22,723 | 28,051 |
 | 30 September 2026 | 5 months | 6 months | 53,298 | 23,581 | 25,498 |
 | 31 August 2026 | 5 months | 6 months | 55,215 | 24,422 | 25,491 |
 | 31 July 2026 | 6 months | 6 months | 56,284 | 24,090 | 30,489 |
